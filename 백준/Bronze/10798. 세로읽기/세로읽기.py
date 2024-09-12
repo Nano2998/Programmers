@@ -1,24 +1,14 @@
-arr = []
-word = []
-length = 0
-cnt = 0
+arr = [['-' for _ in range(15)] for _ in range(5)]
 
+for i in range(5):
+    a = input().rstrip()
+    for j, char in enumerate(a):
+        arr[i][j] = char
 
-for _ in range(5):
-    a = input()
-    arr.append(a)
-    if length < len(a):
-        length = len(a)
+result =''
+for j in range(15):
+    for i in range(5):
+        if arr[i][j] != '-':
+            result += arr[i][j]
 
-while True:
-    if length == cnt:
-        break
-
-    for i in arr:
-        try:
-            word.append(i[cnt])
-        except:
-            pass
-    cnt += 1
-
-print("".join(word))
+print(result)
