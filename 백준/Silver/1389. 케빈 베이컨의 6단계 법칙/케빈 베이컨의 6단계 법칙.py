@@ -31,11 +31,11 @@ for i in range(1,n+1):
     visited = [False] * (n+1)
     bfs(graph,visited,i)
 
-answer = 0
-min_num = min(arr)
+min = max(arr)
+answer = 1
 for i in range(len(arr)):
-    if arr[i] == min_num:
+    if min > arr[i]:
+        min = arr[i]
         answer = i+1
-        break
 
 print(answer)
