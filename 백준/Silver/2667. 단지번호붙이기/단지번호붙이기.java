@@ -1,61 +1,68 @@
-import java.io.*;
-import java.util.*;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.StringTokenizer;
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-
-    static int N;
-    static boolean [][] visited;
-    static ArrayList<Integer> graph = new ArrayList<>();
-    static int[] dx = {0, 0, 1, -1};
-    static int[] dy = {1, -1, 0, 0};
-    static int[][] arr;
-    static int cnt;
+    static int n;
+    static boolean[][] graph;
+    static boolean[][] visited;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+    static int count = 0;
+    static ArrayList<Integer> arr;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        visited = new boolean[N][N];
-        arr = new int[N][N];
+        n = Integer.parseInt(br.readLine());
+        graph = new boolean[n][n];
+        visited = new boolean[n][n];
+        arr = new ArrayList<>();
 
-        for (int i = 0; i < N; i++) {
-            String[] line = br.readLine().split("");
-            for (int j = 0; j < N; j++) {
-                arr[i][j] = Integer.parseInt(line[j]);
-            }
-        }
-
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (arr[i][j] == 1 && !visited[i][j]) {
-                    cnt = 0;
-                    dfs(i,j);
-                    graph.add(cnt);
+        for (int i = 0; i < n; i++) {
+            String s = br.readLine();
+            for (int j = 0; j < n; j++) {
+                if (s.charAt(j) == '1') {
+                    graph[i][j] = true;
                 }
             }
         }
-
-        Collections.sort(graph);
-        System.out.println(graph.size());
-        for (Integer i : graph) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!visited[i][j] && graph[i][j]) {
+                    count = 0;
+                    dfs(i, j);
+                    arr.add(count);
+                }
+            }
+        }
+        System.out.println(arr.size());
+        Collections.sort(arr);
+        for (Integer i : arr) {
             System.out.println(i);
         }
     }
 
-    static void dfs(int x, int y ) {
+    static void dfs(int x, int y) {
+        if (x < 0 || x >= n || y < 0 || y >= n) {
+            return; 
+        }
+        if (visited[x][y] || !graph[x][y]) {
+            return; 
+        }
+
         visited[x][y] = true;
-        cnt++;
+        count++;
 
-        for (int i = 0; i < 4; i++) {
-            int nx  = x + dx[i];
-            int ny  = y + dy[i];
+        for (int k = 0; k < 4; k++) {
+            int numX = x + dx[k];
+            int numY = y + dy[k];
 
-            if (nx < 0 || ny < 0 || nx >= N || ny >= N) {
-                continue;
-            }
-
-            if (!visited[nx][ny] && arr[nx][ny] == 1) {
-                dfs(nx,ny);
+             dfs(numX,numY);
             }
         }
     }
-}
