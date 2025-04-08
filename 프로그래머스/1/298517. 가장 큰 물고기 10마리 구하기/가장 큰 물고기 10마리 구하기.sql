@@ -1,0 +1,7 @@
+-- 코드를 작성해주세요
+SELECT
+    F.ID
+    , F.LENGTH
+FROM FISH_INFO AS F
+ORDER BY IFNULL(F.LENGTH,10) desc, F.ID asc
+LIMIT 10
